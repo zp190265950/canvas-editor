@@ -2471,4 +2471,102 @@ export class CommandAdapt {
     }
     return result
   }
+
+  public getSelectTableTr(): ITd[][] | any {
+    const positionContext = this.position.getPositionContext()
+    if (!positionContext.isTable) return
+    const {
+      isCrossRowCol,
+      startTdIndex,
+      endTdIndex,
+      startTrIndex,
+      endTrIndex
+    } = this.range.getRange()
+    if (!isCrossRowCol) return
+    const { index } = positionContext
+    const originalElementList = this.draw.getOriginalElementList()
+    const element = originalElementList[index!]
+    const curTrList = element.trList!
+    let startTd = curTrList[startTrIndex!].tdList[startTdIndex!]
+    let endTd = curTrList[endTrIndex!].tdList[endTdIndex!]
+    // 交换起始位置
+    if (startTd.x! > endTd.x! || startTd.y! > endTd.y!) {
+      // prettier-ignore
+      [startTd, endTd] = [endTd, startTd]
+    }
+    const startColIndex = startTd.colIndex!
+    const endColIndex = endTd.colIndex! + (endTd.colspan - 1)
+    const startRowIndex = startTd.rowIndex!
+    const endRowIndex = endTd.rowIndex! + (endTd.rowspan - 1)
+    // 选区行列
+    const rowCol: ITd[][] = []
+    for (let t = 0; t < curTrList.length; t++) {
+      const tr = curTrList[t]
+      const tdList: ITd[] = []
+      for (let d = 0; d < tr.tdList.length; d++) {
+        const td = tr.tdList[d]
+        const tdColIndex = td.colIndex!
+        const tdRowIndex = td.rowIndex!
+        if (
+          tdColIndex >= startColIndex &&
+          tdColIndex <= endColIndex &&
+          tdRowIndex >= startRowIndex &&
+          tdRowIndex <= endRowIndex
+        ) {
+          tdList.push(td)
+        }
+      }
+      if (tdList.length) {
+        rowCol.push(tdList)
+      }
+    }
+    if (!rowCol.length) return
+    // 是否是矩形
+    const lastRow = rowCol[rowCol.length - 1]
+    const leftTop = rowCol[0][0]
+    const rightBottom = lastRow[lastRow.length - 1]
+    const startX = leftTop.x!
+    const startY = leftTop.y!
+    const endX = rightBottom.x! + rightBottom.width!
+    const endY = rightBottom.y! + rightBottom.height!
+    for (let t = 0; t < rowCol.length; t++) {
+      const tr = rowCol[t]
+      for (let d = 0; d < tr.length; d++) {
+        const td = tr[d]
+        const tdStartX = td.x!
+        const tdStartY = td.y!
+        const tdEndX = tdStartX + td.width!
+        const tdEndY = tdStartY + td.height!
+        // 存在不符合项
+        if (
+          startX > tdStartX ||
+          startY > tdStartY ||
+          endX < tdEndX ||
+          endY < tdEndY
+        ) {
+          return
+        }
+      }
+    }
+    return rowCol
+  }
+  // 获取选中单元格
+  public getSelectTableTdList(): ITd[] | any {
+    const { isCrossRowCol } = this.range.getRange()
+    if (isCrossRowCol) {
+      const rowCol = this.getSelectTableTr()
+      return rowCol.reduce((a: ITd[], b: ITd[]) => a.concat(b), [])
+    }
+    const td = this.getCurrentValue()
+    if (!td) return null
+    return [td]
+  }
+  public getCurrentValue(): ITd | null {
+    const positionContext = this.position.getPositionContext()
+    if (!positionContext.isTable) return null
+    const { index, tdIndex, trIndex } = positionContext
+    const originalElementList = this.draw.getOriginalElementList()
+    const valueData = originalElementList[index!].trList![trIndex!].tdList[tdIndex!]
+    return valueData
+  }
 }

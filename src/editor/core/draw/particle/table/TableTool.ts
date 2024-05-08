@@ -202,7 +202,7 @@ export class TableTool {
   private _mousedown(payload: IAnchorMouseDown) {
     const { evt, index, order, element } = payload
     this.canvas = this.draw.getPage()
-    const { scale } = this.options
+    const { scale, isTableGlobalHeight } = this.options
     const width = this.draw.getWidth()
     const height = this.draw.getHeight()
     const pageGap = this.draw.getPageGap()
@@ -256,12 +256,42 @@ export class TableTool {
           const tr = trList[index] || trList[index - 1]
           // 最大移动高度-向上移动超出最小高度限定，则减少移动量
           const { defaultTrMinHeight } = this.options
-          if (dy < 0 && tr.height + dy < defaultTrMinHeight) {
-            dy = defaultTrMinHeight - tr.height
-          }
-          if (dy) {
-            tr.height += dy
-            tr.minHeight = tr.height
+          if (isTableGlobalHeight) {
+            if (dy < 0 && tr.height + dy < defaultTrMinHeight) {
+              dy = defaultTrMinHeight - tr.height
+            }
+            if (dy) {
+              tr.height += dy
+              tr.minHeight = tr.height
+              isChangeSize = true
+            }
+          } else {
+            if (index === trList.length - 1) {
+              if (dy < 0 && tr.height + dy < defaultTrMinHeight) {
+                dy = defaultTrMinHeight - tr.height
+              }
+              if (dy) {
+                tr.height += dy
+                tr.minHeight = tr.height
+              }
+            } else {
+              const currentTr = trList[index]
+              const nextTr = trList[index + 1]
+              if (dy < 0) {
+                const offsetY = currentTr.height + dy < defaultTrMinHeight ? defaultTrMinHeight - currentTr.height : dy
+                console.log(offsetY, 'offsetY', currentTr, nextTr)
+                currentTr.height += offsetY
+                currentTr.minHeight = currentTr.height
+                nextTr.height -= offsetY
+                nextTr.minHeight = nextTr.height
+              } else if (dy > 0) {
+                const offsetY = nextTr.height - dy < defaultTrMinHeight ? nextTr.height - defaultTrMinHeight : dy
+                currentTr.height += offsetY
+                currentTr.minHeight = currentTr.height
+                nextTr.height -= offsetY
+                nextTr.minHeight = nextTr.height
+              }
+            }
             isChangeSize = true
           }
         } else {

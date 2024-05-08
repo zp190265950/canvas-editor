@@ -111,6 +111,7 @@ export class Command {
   public getControlList: CommandAdapt['getControlList']
   public getContainer: CommandAdapt['getContainer']
   public getTitleValue: CommandAdapt['getTitleValue']
+  public getSelectTableTdList: CommandAdapt['getSelectTableTdList']
 
   constructor(adapt: CommandAdapt) {
     // 全局命令
@@ -225,6 +226,7 @@ export class Command {
     this.getGroupIds = adapt.getGroupIds.bind(adapt)
     this.getContainer = adapt.getContainer.bind(adapt)
     this.getTitleValue = adapt.getTitleValue.bind(adapt)
+    this.getSelectTableTdList = adapt.getSelectTableTdList.bind(adapt)
     // 控件
     this.executeSetControlValue = adapt.setControlValue.bind(adapt)
     this.executeSetControlExtension = adapt.setControlExtension.bind(adapt)

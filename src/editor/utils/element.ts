@@ -598,6 +598,10 @@ export function zipElementList(payload: IElement[]): IElement[] {
             const zipTd: ITd = {
               colspan: td.colspan,
               rowspan: td.rowspan,
+              customKey: td.customKey,
+              customTableKey: td.customTableKey,
+              groupId: td.groupId,
+              groupSort: td.groupSort,
               value: zipElementList(td.value)
             }
             // 压缩单元格属性

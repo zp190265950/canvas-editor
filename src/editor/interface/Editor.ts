@@ -90,6 +90,7 @@ export interface IEditorOption {
   lineBreak?: ILineBreakOption
   separator?: ISeparatorOption
   isSplitTableTh?: boolean
+  isTableGlobalHeight?: boolean
 }
 
 export interface IEditorResult {

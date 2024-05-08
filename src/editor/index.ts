@@ -207,6 +207,8 @@ export default class Editor {
       scrollContainerSelector: '',
       // 表格拆分是否拆分表头
       isSplitTableTh: false,
+      // 拖拽表格是否改变整体表格高度，false该表相邻行高度
+      isTableGlobalHeight: true,
       ...options,
       header: headerOptions,
       footer: footerOptions,

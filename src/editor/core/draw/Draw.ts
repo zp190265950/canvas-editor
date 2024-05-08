@@ -1124,7 +1124,7 @@ export class Draw {
 
   public computeRowList(payload: IComputeRowListPayload) {
     const { innerWidth, elementList, isPagingMode = false } = payload
-    const { defaultSize, defaultRowMargin, scale, tdPadding, defaultTabWidth, isSplitTableTh } =
+    const { defaultSize, defaultRowMargin, scale, tdPadding, defaultTabWidth, isSplitTableTh, isTableGlobalHeight } =
       this.options
     const defaultBasicRowMarginHeight = this.getDefaultBasicRowMarginHeight()
     const canvas = document.createElement('canvas')
@@ -1247,7 +1247,7 @@ export class Draw {
             // 移除缩放导致的行高变化-渲染时会进行缩放调整
             const curTdHeight = rowHeight / scale + tdPaddingHeight
             // 内容高度大于当前单元格高度需增加
-            if (td.height! < curTdHeight) {
+            if (isTableGlobalHeight && td.height! < curTdHeight) {
               const extraHeight = curTdHeight - td.height!
               const changeTr = trList[t + td.rowspan - 1]
               changeTr.height += extraHeight
@@ -1309,7 +1309,8 @@ export class Draw {
         metrics.width = elementWidth
         metrics.height = elementHeight
         metrics.boundingBoxDescent = elementHeight
-        metrics.boundingBoxAscent = -rowMargin
+        // 特殊配置处理多个表格之间的间隙
+        metrics.boundingBoxAscent = -rowMargin * 2
         // 表格分页处理(拆分表格)
         if (isPagingMode) {
           const height = this.getHeight()
