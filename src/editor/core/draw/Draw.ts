@@ -2219,7 +2219,7 @@ export class Draw {
   }
 
   public render(payload?: IDrawOption) {
-    const { header, footer } = this.options
+    const { header, footer, isMoveTableLine } = this.options
     const {
       isSubmitHistory = true,
       isSetCursor = true,
@@ -2345,7 +2345,7 @@ export class Draw {
     // 信息变动回调
     nextTick(() => {
       // 表格工具重新渲染
-      if (isCompute && !this.isReadonly() && positionContext.isTable) {
+      if (isCompute && !this.isReadonly() && positionContext.isTable || isMoveTableLine) {
         this.tableTool.render()
       }
       // 页眉指示器重新渲染

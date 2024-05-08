@@ -1,5 +1,6 @@
 import {
   ControlType,
+  EditorMode,
   ElementType,
   IEditorOption,
   IElement,
@@ -483,5 +484,7 @@ export const options: IEditorOption = {
   zone: {
     tipDisabled: false
   },
+  mode: EditorMode.READONLY,
+  isMoveTableLine: true,
   maskMargin: [60, 0, 30, 0] // 菜单栏高度60，底部工具栏30为遮盖层
 }

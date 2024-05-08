@@ -91,6 +91,8 @@ export interface IEditorOption {
   separator?: ISeparatorOption
   isSplitTableTh?: boolean
   isTableGlobalHeight?: boolean
+  // 是否可以拖拽表格线，在只读模式下使用
+  isMoveTableLine?: boolean
 }
 
 export interface IEditorResult {
