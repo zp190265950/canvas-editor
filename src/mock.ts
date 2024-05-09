@@ -469,7 +469,7 @@ export const commentList: IComment[] = [
 ]
 
 export const options: IEditorOption = {
-  margins: [100, 120, 100, 120],
+  margins: [2, 2, 2, 2],
   watermark: {
     data: 'CANVAS-EDITOR',
     size: 120
@@ -484,7 +484,13 @@ export const options: IEditorOption = {
   zone: {
     tipDisabled: false
   },
-  mode: EditorMode.READONLY,
+  footer: {
+    disabled: true
+  },
+  header: {
+    disabled: true
+  },
+  // mode: EditorMode.READONLY,
   isMoveTableLine: true,
   maskMargin: [60, 0, 30, 0] // 菜单栏高度60，底部工具栏30为遮盖层
 }

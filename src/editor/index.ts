@@ -209,6 +209,8 @@ export default class Editor {
       isSplitTableTh: false,
       // 拖拽表格是否改变整体表格高度，false该表相邻行高度
       isTableGlobalHeight: true,
+      // 只读模式下可以拖拽表格线
+      isMoveTableLine: false,
       ...options,
       header: headerOptions,
       footer: footerOptions,

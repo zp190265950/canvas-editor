@@ -602,6 +602,7 @@ export function zipElementList(payload: IElement[]): IElement[] {
               customTableKey: td.customTableKey,
               groupId: td.groupId,
               groupSort: td.groupSort,
+              isImage: td.isImage,
               value: zipElementList(td.value)
             }
             // 压缩单元格属性

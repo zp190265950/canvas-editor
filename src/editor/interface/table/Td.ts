@@ -30,4 +30,5 @@ export interface ITd {
   customTableKey?: string // 绑定表格属性
   groupId?: string  // 分组id
   groupSort?: number  // 分组排序
+  isImage?: boolean // 是否图片埋点
 }
