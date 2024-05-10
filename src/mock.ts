@@ -1,6 +1,6 @@
 import {
   ControlType,
-  EditorMode,
+  // EditorMode,
   ElementType,
   IEditorOption,
   IElement,
