@@ -270,7 +270,7 @@ export class TableTool {
               if (dy < 0 && tr.height + dy < defaultTrMinHeight) {
                 dy = defaultTrMinHeight - tr.height
               }
-              if (dy) {
+              if (dy && isTableGlobalHeight) {
                 tr.height += dy
                 tr.minHeight = tr.height
               }
