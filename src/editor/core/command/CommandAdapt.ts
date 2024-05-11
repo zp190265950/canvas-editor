@@ -378,7 +378,7 @@ export class CommandAdapt {
   public sizeAdd() {
     const isDisabled =
       this.draw.isReadonly() || this.control.getIsDisabledControl()
-    if (isDisabled) return
+    if (isDisabled && !this.options.isMoveTableLine) return
     const selection = this.range.getTextLikeSelectionElementList()
     // 选区设置或设置换行处样式
     let renderOption: IDrawOption = {}
@@ -418,7 +418,7 @@ export class CommandAdapt {
   public sizeMinus() {
     const isDisabled =
       this.draw.isReadonly() || this.control.getIsDisabledControl()
-    if (isDisabled) return
+    if (isDisabled && !this.options.isMoveTableLine) return
     const selection = this.range.getTextLikeSelectionElementList()
     // 选区设置或设置换行处样式
     let renderOption: IDrawOption = {}

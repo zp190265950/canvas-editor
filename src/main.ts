@@ -1092,7 +1092,7 @@ window.onload = function () {
   const printDom = document.querySelector<HTMLDivElement>('.menu-item__print')!
   printDom.title = `打印(${isApple ? '⌘' : 'Ctrl'}+P)`
   printDom.onclick = function () {
-    console.log('print', instance.command.getHTML())
+    console.log('print', instance.command.getOptions())
     instance.command.executePrint()
   }
 
