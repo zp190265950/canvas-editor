@@ -112,6 +112,7 @@ export class Command {
   public getContainer: CommandAdapt['getContainer']
   public getTitleValue: CommandAdapt['getTitleValue']
   public getSelectTableTdList: CommandAdapt['getSelectTableTdList']
+  public getImageBase64List: CommandAdapt['getImageBase64List']
 
   constructor(adapt: CommandAdapt) {
     // 全局命令
@@ -227,6 +228,7 @@ export class Command {
     this.getContainer = adapt.getContainer.bind(adapt)
     this.getTitleValue = adapt.getTitleValue.bind(adapt)
     this.getSelectTableTdList = adapt.getSelectTableTdList.bind(adapt)
+    this.getImageBase64List = adapt.getImageBase64List.bind(adapt)
     // 控件
     this.executeSetControlValue = adapt.setControlValue.bind(adapt)
     this.executeSetControlExtension = adapt.setControlExtension.bind(adapt)

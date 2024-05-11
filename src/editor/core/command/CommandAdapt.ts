@@ -2569,4 +2569,19 @@ export class CommandAdapt {
     const valueData = originalElementList[index!].trList![trIndex!].tdList[tdIndex!]
     return valueData
   }
+  // 获取canvas转换后的base64
+  public async getImageBase64List() {
+    const { scale, printPixelRatio } = this.options
+    if (scale !== 1) {
+      this.draw.setPageScale(1)
+    }
+    const base64List = await this.draw.getDataURL({
+      pixelRatio: printPixelRatio,
+      mode: EditorMode.PRINT
+    })
+    if (scale !== 1) {
+      this.draw.setPageScale(scale)
+    }
+    return base64List
+  }
 }
