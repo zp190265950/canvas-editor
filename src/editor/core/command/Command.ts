@@ -113,6 +113,7 @@ export class Command {
   public getTitleValue: CommandAdapt['getTitleValue']
   public getSelectTableTdList: CommandAdapt['getSelectTableTdList']
   public getImageBase64List: CommandAdapt['getImageBase64List']
+  public executeSetTableLineHeight: CommandAdapt['setTableLineHeight']
 
   constructor(adapt: CommandAdapt) {
     // 全局命令
@@ -236,5 +237,7 @@ export class Command {
     this.executeSetControlHighlight = adapt.setControlHighlight.bind(adapt)
     this.getControlValue = adapt.getControlValue.bind(adapt)
     this.getControlList = adapt.getControlList.bind(adapt)
+    // 表格设置行高
+    this.executeSetTableLineHeight = adapt.setTableLineHeight.bind(adapt)
   }
 }

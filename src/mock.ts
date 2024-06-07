@@ -492,5 +492,6 @@ export const options: IEditorOption = {
   },
   // mode: EditorMode.READONLY,
   isMoveTableLine: true,
+  scale: 1,
   maskMargin: [60, 0, 30, 0] // 菜单栏高度60，底部工具栏30为遮盖层
 }

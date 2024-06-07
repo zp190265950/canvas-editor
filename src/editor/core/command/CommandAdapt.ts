@@ -2584,4 +2584,31 @@ export class CommandAdapt {
     }
     return base64List
   }
+
+  // 设置表格行高度
+  public setTableLineHeight(height: number) {
+    const positionContext = this.position.getPositionContext()
+    if (!positionContext.isTable) return
+    const {
+      startTrIndex,
+      endTrIndex
+    } = this.range.getRange()
+    console.log(this.range.getRange())
+    const { index } = positionContext
+    const originalElementList = this.draw.getOriginalElementList()
+    const element = originalElementList[index!]
+    let tableHeight = 0
+    element.trList?.forEach((tr, trIndex) => {
+      if (trIndex >= startTrIndex! && trIndex <= endTrIndex!) {
+        console.log(tr, trIndex)
+        tr.height = height
+        tr.minHeight = height
+        tableHeight += height
+      } else {
+        tableHeight += tr.height
+      }
+    })
+    element.height = tableHeight
+    this.draw.render({ isSetCursor: false })
+  }
 }

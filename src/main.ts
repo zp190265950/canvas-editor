@@ -1675,6 +1675,18 @@ window.onload = function () {
   // 9. 右键菜单注册
   instance.register.contextMenuList([
     {
+      key: 'setTableHeight',
+      name: '设置行高',
+      when: (payload) => {
+        return !payload.isReadonly && payload.isInTable
+      },
+      callback: (command, context) => {
+        console.log(command, context, command.getSelectTableTdList(), 'command, context')
+        console.log(command.getRange(), 'command.getRange()')
+        command.executeSetTableLineHeight(50)
+      }
+    },
+    {
       name: '批注',
       when: payload => {
         return (
